@@ -1,0 +1,13 @@
+function main(): void {
+  setSignals();
+}
+
+async function setSignals(): Promise<void> {
+  const strength_4g_el = document.getElementById('4g-strength');
+  const strength_5g_el = document.getElementById('5g-strength');
+
+  const stats = fetch('http://192.168.12.1/gateway?get=all').then(res => res.json());
+  console.log(stats);
+}
+
+main();
