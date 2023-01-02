@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cp src/index.html build && esbuild src/tmr.ts --outfile=build/tmr.js",
-    "start": "lite-server"
+    "serve": "esr ./server.ts"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jeremiahlangner/tmr#readme",
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
     "esbuild": "^0.16.12",
