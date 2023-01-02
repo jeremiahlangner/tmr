@@ -23,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
     "esbuild": "^0.16.12",
+    "esbuild-runner": "^2.2.2",
     "eslint": "^8.31.0",
     "lite-server": "^2.6.1",
     "node-sass": "^8.0.0"
