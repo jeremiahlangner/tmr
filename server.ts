@@ -13,11 +13,20 @@ async function main(): Promise<void> {
   // fast routes
   list.forEach(f => {
     files[f] = readFileSync('./build/' + f, { encoding: 'utf8' });
-    fastify.get('/' + f, async () => files[f]);
+    fastify.get('/' + f, async (request, reply) => {
+      reply.header('content-type', 'text/html');
+      reply.send(files[f]);
+    });
   });
-  fastify.get('/', async () => readFileSync('./build/index.html', { encoding: 'utf8' }));
-  fastify.get('/stats', async () => {
-    return await axios.get('http://192.168.12.1/TMI/v1/gateway?get=all').then(res => res.data);
+  fastify.get('/', async (request, reply) => {
+    const file = readFileSync('./build/index.html', { encoding: 'utf8' })
+    reply.header('content-type', 'text/html');
+    reply.send(file);
+  });
+  fastify.get('/stats', async (request, reply) => {
+    const stats = await axios.get('http://192.168.12.1/TMI/v1/gateway?get=all').then(res => res.data);
+    reply.header('content-type', 'application/json');
+    reply.send(stats);
   });
 
 
