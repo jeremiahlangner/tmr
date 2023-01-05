@@ -1,8 +1,10 @@
-.signal-strength {
+.signal-bar {
   width: 100%;
   height: 14px;
+  background-color: gray;
 
-  > first-child {
+  div {
     height: 14px;
+    background-color: green;
   }
 }

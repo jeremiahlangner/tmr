@@ -1,5 +1,7 @@
-.signal-strength {
+.signal-bar {
   width: 100%;
-  height: 14px; }
-  .signal-strength > first-child {
-    height: 14px; }
+  height: 14px;
+  background-color: gray; }
+  .signal-bar div {
+    height: 14px;
+    background-color: green; }
