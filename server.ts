@@ -14,7 +14,10 @@ async function main(): Promise<void> {
   list.forEach(f => {
     files[f] = readFileSync('./build/' + f, { encoding: 'utf8' });
     fastify.get('/' + f, async (request, reply) => {
-      reply.header('content-type', 'text/html');
+      if (f.includes('.html'))
+        reply.header('content-type', 'text/html');
+      if (f.includes('.css'))
+        reply.header('content-type', 'text/css');
       reply.send(files[f]);
     });
   });
