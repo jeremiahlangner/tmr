@@ -14,11 +14,6 @@ class RouterDash {
     this._updateInterval = setInterval(this.refreshStats, interval);
   }
 
-  async refreshStats() {
-    this._stats = await fetch('http://localhost:3000/stats').then(res => res.json());
-    this.render();
-  }
-
   render() {
     const strength_4g_el = document.getElementById('4g-strength');
     const strength_5g_el = document.getElementById('5g-strength');
@@ -72,6 +67,12 @@ class RouterDash {
       deviceDetails!.appendChild(item); // eslint-disable-line
     }
   }
+
+  async refreshStats() {
+    this._stats = await fetch('http://localhost:3000/stats').then(res => res.json());
+    this.render();
+  }
+
 }
 
 const dash = new RouterDash(500);
