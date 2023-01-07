@@ -6,10 +6,13 @@ body {
 .container {
   padding: 1rem; }
 
+.signal-type {
+  display: inline-block; }
+
 .signal-bar {
   width: 80px;
   height: 14px;
-  background-color: gray; }
+  background-color: lightgray; }
   .signal-bar div {
     height: 14px;
     background-color: green; }

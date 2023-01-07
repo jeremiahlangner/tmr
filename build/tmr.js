@@ -2,6 +2,13 @@ let stats;
 async function main() {
   setInterval(refreshStats, 500);
 }
+export class RouterDash {
+  constructor() {
+    this._4gStats = {};
+    this._5gStats = {};
+    this._deviceDetails = {};
+  }
+}
 async function refreshStats() {
   stats = await fetch("http://localhost:3000/stats").then((res) => res.json());
   console.log(stats);
@@ -22,6 +29,7 @@ function render() {
     const stat = document.createElement("span");
     stat.innerText = stats.signal["4g"][key];
     item.appendChild(label);
+    item.append(": ");
     item.appendChild(stat);
     _4gStats.appendChild(item);
   }
@@ -35,8 +43,22 @@ function render() {
     const stat = document.createElement("span");
     stat.innerText = stats.signal["5g"][key];
     item.appendChild(label);
+    item.append(": ");
     item.appendChild(stat);
     _5gStats.appendChild(item);
+  }
+  const deviceDetails = document.getElementById("device-details");
+  for (const key in stats.device) {
+    const item = document.createElement("div");
+    const label = document.createElement("span");
+    label.classList.add("stat-label");
+    label.innerText = key;
+    const stat = document.createElement("span");
+    stat.innerText = stats.device[key];
+    item.appendChild(label);
+    item.append(": ");
+    item.appendChild(stat);
+    deviceDetails.appendChild(item);
   }
 }
 main();
