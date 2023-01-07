@@ -1,6 +1,6 @@
 let stats;
 async function main() {
-  setInterval(refreshStats, 1e3);
+  setInterval(refreshStats, 500);
 }
 async function refreshStats() {
   stats = await fetch("http://localhost:3000/stats").then((res) => res.json());

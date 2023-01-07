@@ -13,3 +13,6 @@ body {
   .signal-bar div {
     height: 14px;
     background-color: green; }
+
+.stat-label {
+  font-weight: 600; }

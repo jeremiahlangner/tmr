@@ -1,7 +1,7 @@
 let stats;
 
 async function main(): Promise<void> {
-  setInterval(refreshStats, 1000);
+  setInterval(refreshStats, 500);
 }
 
 async function refreshStats() {
@@ -13,8 +13,8 @@ async function refreshStats() {
 function render() {
   const strength_4g_el = document.getElementById('4g-strength');
   const strength_5g_el = document.getElementById('5g-strength');
-  strength_4g_el!.style.width = stats.signal['4g'].bars / 5 * 100 + '%';
-  strength_5g_el!.style.width = stats.signal['5g'].bars / 5 * 100 + '%';
+  strength_4g_el!.style.width = stats.signal['4g'].bars / 5 * 100 + '%'; // eslint-disable-line
+  strength_5g_el!.style.width = stats.signal['5g'].bars / 5 * 100 + '%'; // eslint-disable-line
 
   const _4gStats = document.getElementById('4g-stats');
   _4gStats!.innerHTML = ''; // eslint-disable-line
@@ -27,7 +27,8 @@ function render() {
     stat.innerText = stats.signal['4g'][key];
     item.appendChild(label);
     item.appendChild(stat);
-    _4gStats!.appendChild(item);
+    _4gStats!.appendChild(item); // eslint-disable-line
+
   }
 
   const _5gStats = document.getElementById('5g-stats');
@@ -41,7 +42,7 @@ function render() {
     stat.innerText = stats.signal['5g'][key];
     item.appendChild(label);
     item.appendChild(stat);
-    _5gStats!.appendChild(item);
+    _5gStats!.appendChild(item); // eslint-disable-line
   }
 }
 main();

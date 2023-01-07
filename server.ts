@@ -3,7 +3,7 @@ import axios from 'axios';
 import { readdirSync, readFileSync } from 'fs';
 
 const fastify = Fastify({
-  logger: true
+  logger: false
 });
 
 async function main(): Promise<void> {
