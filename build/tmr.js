@@ -4,7 +4,7 @@ class RouterDash {
     this._4gStats = {};
     this._5gStats = {};
     this._deviceDetails = {};
-    this._updateInterval = setInterval(this.refreshStats, interval);
+    this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
   }
   render() {
     const strength_4g_el = document.getElementById("4g-strength");
