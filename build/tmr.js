@@ -4,7 +4,7 @@ class RouterDash {
     this._4gStats = {};
     this._5gStats = {};
     this._deviceDetails = {};
-    this.render();
+    this.refreshStats();
     this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
   }
   render() {

@@ -11,7 +11,7 @@ class RouterDash {
   _deviceDetails = {};
 
   constructor(interval: number) {
-    this.render();
+    this.refreshStats();
     this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
   }
 
