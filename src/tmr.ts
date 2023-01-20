@@ -4,15 +4,63 @@ interface Gateway {
 }
 
 class RouterDash {
+  _settings: any;
   _updateInterval;
   _stats: Partial<Gateway> = {};
   _4gStats = {};
   _5gStats = {};
   _deviceDetails = {};
+  _authorized = false;
 
   constructor(interval: number) {
+    this._settings = JSON.parse(localStorage.getItem('tmrouter') as string) || {};
+
+    this.login();
     this.refreshStats();
     this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
+  }
+
+  login() {
+    try {
+      if (this._settings.password && this._settings.keepLoggedIn) this.authorize();
+    } catch { }
+
+    const loginEl: HTMLInputElement = document.querySelector('input[name="password"]'); // eslint-disable-line
+    const keepLoggedInEl: HTMLInputElement = document.querySelector('input[name="save"]'); // eslint-disable-line
+    console.log(loginEl, keepLoggedInEl);
+
+    const loginKeyEvent = loginEl.addEventListener('keyup', e => {
+      if (e.key === 'Enter') {
+        this._settings.password = e.target.value; // eslint-disable-line
+        if (keepLoggedInEl.value == true) localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+        this.authorize();
+      }
+    });
+
+    console.log(this._settings);
+    const loginButton = document.querySelector('div[class="login-dlg"] button');
+    const loginEvent = loginButton.addEventListener('click', () => {
+      console.log(this._settings);
+      this._settings.password = loginEl.value;
+      if (keepLoggedInEl.value == true) localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+      this.authorize();
+    });
+  }
+
+  async authorize() {
+    const loginDlg = document.querySelector('div[class="login-dlg"]');
+
+    await fetch('http://localhost:3000/authorize', {
+      method: 'POST',
+      body: JSON.stringify({
+        username: "admin",
+        password: this._settings.password
+      }),
+      headers: {
+        'accept': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(json => console.log(json));
   }
 
   render() {

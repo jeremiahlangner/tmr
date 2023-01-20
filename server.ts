@@ -31,7 +31,15 @@ async function main(): Promise<void> {
     reply.header('content-type', 'application/json');
     reply.send(stats);
   });
-
+  fastify.post('/authorize', async (request, reply) => {
+    const { username, password } = request;
+    const auth = await axios.post('http://192.168.12.1/TMI/v1/auth/login', {
+      username,
+      password
+    }).then(res => res.data);
+    reply.header('content-type', 'application/json');
+    reply.send(auth);
+  });
 
   try {
     await fastify.listen({
