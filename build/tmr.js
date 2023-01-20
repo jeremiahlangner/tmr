@@ -18,12 +18,14 @@ class RouterDash {
     }
     const loginEl = document.querySelector('input[name="password"]');
     const keepLoggedInEl = document.querySelector('input[name="save"]');
-    console.log(loginEl, keepLoggedInEl);
     const loginKeyEvent = loginEl.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         this._settings.password = e.target.value;
-        if (keepLoggedInEl.value == true)
+        console.log(keepLoggedInEl.value);
+        if (keepLoggedInEl.value == true) {
+          this._settings.keepLoggedIn = true;
           localStorage.setItem("tmrouter", JSON.stringify(this._settings));
+        }
         this.authorize();
       }
     });
@@ -48,7 +50,11 @@ class RouterDash {
       headers: {
         "accept": "application/json"
       }
-    }).then((res) => res.json()).then((json) => console.log(json));
+    }).then((res) => res.json()).then((user) => this._settings.user = user);
+  }
+  async request(options) {
+    if (options.auth && Date.now().valueOf() > this._settings.user.expiration)
+      this.authorize();
   }
   render() {
     const strength_4g_el = document.getElementById("4g-strength");

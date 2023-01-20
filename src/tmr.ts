@@ -27,12 +27,17 @@ class RouterDash {
 
     const loginEl: HTMLInputElement = document.querySelector('input[name="password"]'); // eslint-disable-line
     const keepLoggedInEl: HTMLInputElement = document.querySelector('input[name="save"]'); // eslint-disable-line
-    console.log(loginEl, keepLoggedInEl);
+
+    // if (this._settings.save) keepLoggedInEl.value = true;
 
     const loginKeyEvent = loginEl.addEventListener('keyup', e => {
       if (e.key === 'Enter') {
         this._settings.password = e.target.value; // eslint-disable-line
-        if (keepLoggedInEl.value == true) localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+        console.log(keepLoggedInEl.value);
+        if (keepLoggedInEl.value == true) {
+          this._settings.keepLoggedIn = true;
+          localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+        }
         this.authorize();
       }
     });
