@@ -60,7 +60,11 @@ class RouterDash {
         'accept': 'application/json'
       }
     }).then(res => res.json())
-      .then(json => console.log(json));
+      .then(user => this._settings.user = user);
+  }
+
+  async request(options: any) {
+    if (options.auth && Date.now().valueOf() > this._settings.user.expiration) this.authorize();
   }
 
   render() {
