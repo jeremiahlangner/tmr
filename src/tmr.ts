@@ -14,6 +14,7 @@ class RouterDash {
 
   constructor(interval: number) {
     this._settings = JSON.parse(localStorage.getItem('tmrouter') as string) || {};
+    console.log(this._settings);
 
     this.login();
     this.refreshStats();
@@ -23,7 +24,7 @@ class RouterDash {
   login() {
     try {
       if (this._settings.password && this._settings.keepLoggedIn) this.authorize();
-    } catch { }
+    } catch { } // eslint-disable-line
 
     const loginEl: HTMLInputElement = document.querySelector('input[name="password"]'); // eslint-disable-line
     const keepLoggedInEl: HTMLInputElement = document.querySelector('input[name="save"]'); // eslint-disable-line
@@ -32,12 +33,8 @@ class RouterDash {
 
     const loginKeyEvent = loginEl.addEventListener('keyup', e => {
       if (e.key === 'Enter') {
-        this._settings.password = e.target.value; // eslint-disable-line
-        console.log(keepLoggedInEl.value);
-        if (keepLoggedInEl.value == true) {
-          this._settings.keepLoggedIn = true;
-          localStorage.setItem('tmrouter', JSON.stringify(this._settings));
-        }
+        this._settings.password = (e.target as HTMLInputElement).value;
+        if (keepLoggedInEl.value == 'on') localStorage.setItem('tmrouter', JSON.stringify(this._settings));
         this.authorize();
       }
     });
@@ -45,15 +42,14 @@ class RouterDash {
     console.log(this._settings);
     const loginButton = document.querySelector('div[class="login-dlg"] button');
     const loginEvent = loginButton.addEventListener('click', () => {
-      console.log(this._settings);
       this._settings.password = loginEl.value;
-      if (keepLoggedInEl.value == true) localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+      if (keepLoggedInEl.value == 'on') localStorage.setItem('tmrouter', JSON.stringify(this._settings));
       this.authorize();
     });
   }
 
   async authorize() {
-    const loginDlg = document.querySelector('div[class="login-dlg"]');
+    const loginDlg: HTMLElement = document.querySelector('div[class="login-dlg"]'); // eslint-disable-line
 
     await fetch('http://localhost:3000/authorize', {
       method: 'POST',
@@ -65,7 +61,12 @@ class RouterDash {
         'accept': 'application/json'
       }
     }).then(res => res.json())
-      .then(user => this._settings.user = user);
+      .then(user => {
+        console.log(user);
+        if (!user.auth.token) return;
+        this._settings.user = user.auth;
+        loginDlg.style.display = 'none';
+      });
   }
 
   async request(options: any) {

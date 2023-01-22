@@ -6,6 +6,7 @@ class RouterDash {
     this._deviceDetails = {};
     this._authorized = false;
     this._settings = JSON.parse(localStorage.getItem("tmrouter")) || {};
+    console.log(this._settings);
     this.login();
     this.refreshStats();
     this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
@@ -21,20 +22,16 @@ class RouterDash {
     const loginKeyEvent = loginEl.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         this._settings.password = e.target.value;
-        console.log(keepLoggedInEl.value);
-        if (keepLoggedInEl.value == true) {
-          this._settings.keepLoggedIn = true;
+        if (keepLoggedInEl.value == "on")
           localStorage.setItem("tmrouter", JSON.stringify(this._settings));
-        }
         this.authorize();
       }
     });
     console.log(this._settings);
     const loginButton = document.querySelector('div[class="login-dlg"] button');
     const loginEvent = loginButton.addEventListener("click", () => {
-      console.log(this._settings);
       this._settings.password = loginEl.value;
-      if (keepLoggedInEl.value == true)
+      if (keepLoggedInEl.value == "on")
         localStorage.setItem("tmrouter", JSON.stringify(this._settings));
       this.authorize();
     });
@@ -50,7 +47,13 @@ class RouterDash {
       headers: {
         "accept": "application/json"
       }
-    }).then((res) => res.json()).then((user) => this._settings.user = user);
+    }).then((res) => res.json()).then((user) => {
+      console.log(user);
+      if (!user.auth.token)
+        return;
+      this._settings.user = user.auth;
+      loginDlg.style.display = "none";
+    });
   }
   async request(options) {
     if (options.auth && Date.now().valueOf() > this._settings.user.expiration)
