@@ -34,7 +34,10 @@ class RouterDash {
     const loginKeyEvent = loginEl.addEventListener('keyup', e => {
       if (e.key === 'Enter') {
         this._settings.password = (e.target as HTMLInputElement).value;
-        if (keepLoggedInEl.value == 'on') localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+        if (keepLoggedInEl.value == 'on') {
+          this._settings.keepLoggedIn = true;
+          localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+        }
         this.authorize();
       }
     });
@@ -43,7 +46,10 @@ class RouterDash {
     const loginButton = document.querySelector('div[class="login-dlg"] button');
     const loginEvent = loginButton.addEventListener('click', () => {
       this._settings.password = loginEl.value;
-      if (keepLoggedInEl.value == 'on') localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+      if (keepLoggedInEl.value == 'on') {
+        this._settings.keepLoggedIn = true;
+        localStorage.setItem('tmrouter', JSON.stringify(this._settings));
+      }
       this.authorize();
     });
   }
