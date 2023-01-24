@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node-sass src/style.scss build/style.css && cp -r src/index.html build && esbuild src/tmr.ts --outfile=build/tmr.js",
-    "start": "npm run build && esr ./src/server.ts",
-    "serve": "esr ./src/server.ts",
-    "lint:fix": "eslint src --fix"
+    "build": "node-sass src/client/style.scss build/style.css && cp -r src/client/index.html build && esbuild src/client/tmr.ts --outfile=build/main.js",
+    "start": "npm run build && esr ./src/server/server.ts",
+    "serve": "esr ./src/server/server.ts",
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "repository": {
     "type": "git",

@@ -2,12 +2,11 @@ import Fastify from 'fastify';
 import { readdirSync, readFileSync } from 'fs';
 import { routes } from './routes';
 
-const fastify = Fastify({
-  logger: false
-});
-
 // currently runs from execution dir?
 (async () => {
+  const fastify = Fastify({
+    logger: false
+  });
   const files = {};
   const list = readdirSync('./build/');
 
@@ -29,7 +28,6 @@ const fastify = Fastify({
     reply.header('content-type', 'text/html');
     reply.send(file);
   });
-
 
   // routing
   for (const method in routes) {
