@@ -6,6 +6,7 @@ interface Gateway {
 class RouterDash {
   _settings: any;
   _updateInterval;
+  _configuration: any = {};
   _stats: Partial<Gateway> = {};
   _4gStats = {};
   _5gStats = {};
@@ -79,6 +80,7 @@ class RouterDash {
         if (!user.auth.token) return;
         this._settings.user = user.auth;
         loginDlg.style.display = 'none';
+        this.getConfiguration();
       });
   }
 
@@ -87,7 +89,6 @@ class RouterDash {
   }
 
   render() {
-    console.log(this._stats);
     const strength_4g_el = document.getElementById('4g-strength');
     const strength_5g_el = document.getElementById('5g-strength');
     strength_4g_el!.style.width = this._stats.signal['4g'].bars / 5 * 100 + '%'; // eslint-disable-line
@@ -158,6 +159,14 @@ class RouterDash {
 
   }
 
+  async getConfiguration() {
+    this._configuration = await fetch('http://localhost:3000/configuration', {
+      headers: {
+        'Authorization': 'Bearer ' + this._settings.user.token
+      }
+    }).then(res => res.json());
+    console.log(this._configuration);
+  }
   async refreshStats() {
     this._stats = await fetch('http://localhost:3000/stats').then(res => res.json());
     this.render();

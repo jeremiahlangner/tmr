@@ -3,7 +3,10 @@ import axios from 'axios';
 export const routes = {
   get: {
     '/configuration': async (request, reply) => {
-      console.log('configuration requested');
+      const configuration = await axios.get('http://192.168.12.1/TMI/v1/network/configuration?get=all')
+        .then(res => res.data);
+      reply.header('content-type', 'application/json');
+      reply.send(configuration);
     },
     '/stats': async (request, reply) => {
       const stats = await axios.get('http://192.168.12.1/TMI/v1/gateway?get=all')

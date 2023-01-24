@@ -1,5 +1,6 @@
 class RouterDash {
   constructor(interval) {
+    this._configuration = {};
     this._stats = {};
     this._4gStats = {};
     this._5gStats = {};
@@ -62,6 +63,7 @@ class RouterDash {
         return;
       this._settings.user = user.auth;
       loginDlg.style.display = "none";
+      this.getConfiguration();
     });
   }
   async request(options) {
@@ -69,7 +71,6 @@ class RouterDash {
       this.authorize();
   }
   render() {
-    console.log(this._stats);
     const strength_4g_el = document.getElementById("4g-strength");
     const strength_5g_el = document.getElementById("5g-strength");
     strength_4g_el.style.width = this._stats.signal["4g"].bars / 5 * 100 + "%";
@@ -134,6 +135,14 @@ class RouterDash {
       _5gStatsEl.appendChild(item);
     }
     this._5gStats = this._stats.signal["5g"];
+  }
+  async getConfiguration() {
+    this._configuration = await fetch("http://localhost:3000/configuration", {
+      headers: {
+        "Authorization": "Bearer " + this._settings.user.token
+      }
+    }).then((res) => res.json());
+    console.log(this._configuration);
   }
   async refreshStats() {
     this._stats = await fetch("http://localhost:3000/stats").then((res) => res.json());
