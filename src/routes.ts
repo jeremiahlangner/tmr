@@ -14,7 +14,6 @@ export const routes = {
       reply.header('content-type', 'application/json');
       reply.send(configuration);
     },
-
     async configuration(request, reply) {
       const { authorization } = request.headers;
       const configuration = await axios.get(baseUrl + 'network/configuration?get=ap', {
@@ -25,7 +24,6 @@ export const routes = {
       reply.header('content-type', 'application/json');
       reply.send(configuration);
     },
-
     async stats(request, reply) {
       const stats = await axios.get(baseUrl + 'gateway?get=all').then(res => res.data);
       reply.header('content-type', 'application/json');
@@ -33,10 +31,19 @@ export const routes = {
     },
   },
   post: {
+    async reset(request, reply) {
+      const { authorization } = request.headers;
+      await axios.post(baseUrl + 'gateway/reset?set=reboot', {
+        headers: {
+          Authorization: authorization
+        }
+      }).then(res => res.data);
+      reply.header('content-type', 'application/json');
+      reply.send({ success: true });
+    },
     async configuration(request, reply) {
       console.log('attempting to post to configuration');
     },
-
     async authorize(request, reply) {
       const { username, password } = JSON.parse(request.body);
       const auth = await axios.post(baseUrl + 'auth/login', {
