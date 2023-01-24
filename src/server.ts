@@ -1,5 +1,4 @@
 import Fastify from 'fastify';
-import axios from 'axios';
 import { readdirSync, readFileSync } from 'fs';
 import { routes } from './routes';
 
