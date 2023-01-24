@@ -6,6 +6,7 @@ const fastify = Fastify({
   logger: false
 });
 
+// currently runs from execution dir?
 (async () => {
   const files = {};
   const list = readdirSync('./build/');
