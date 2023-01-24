@@ -14,11 +14,16 @@ class RouterDash {
 
   constructor(interval: number) {
     this._settings = JSON.parse(localStorage.getItem('tmrouter') as string) || {};
-    console.log(this._settings);
 
     this.login();
     this.refreshStats();
     this._updateInterval = setInterval(this.refreshStats.bind(this), interval);
+  }
+
+  logout() {
+    this._settings = {};
+    localStorage.removeItem('tmrouter');
+    location.reload();
   }
 
   login() {
@@ -42,8 +47,7 @@ class RouterDash {
       }
     });
 
-    console.log(this._settings);
-    const loginButton = document.querySelector('div[class="login-dlg"] button');
+    const loginButton: HTMLButtonElement = document.querySelector('div[class="login-dlg"] button');
     const loginEvent = loginButton.addEventListener('click', () => {
       this._settings.password = loginEl.value;
       if (keepLoggedInEl.value == 'on') {
@@ -52,6 +56,9 @@ class RouterDash {
       }
       this.authorize();
     });
+
+    const logoutButton: HTMLButtonElement = document.getElementById('logout-button');
+    const logoutEvent = logoutButton.addEventListener('click', () => this.logout());
   }
 
   async authorize() {
