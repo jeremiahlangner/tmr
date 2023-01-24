@@ -69,6 +69,7 @@ class RouterDash {
       this.authorize();
   }
   render() {
+    console.log(this._stats);
     const strength_4g_el = document.getElementById("4g-strength");
     const strength_5g_el = document.getElementById("5g-strength");
     strength_4g_el.style.width = this._stats.signal["4g"].bars / 5 * 100 + "%";
