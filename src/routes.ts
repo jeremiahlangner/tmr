@@ -1,27 +1,51 @@
 import axios from 'axios';
 
+const baseUrl = 'http://192.168.12.1/TMI/v1/';
+
 export const routes = {
   get: {
-    '/configuration': async (request, reply) => {
-      const configuration = await axios.get('http://192.168.12.1/TMI/v1/network/configuration?get=all')
-        .then(res => res.data);
+    async telemetry(request, reply) {
+      const { authorization } = request.headers;
+      const configuration = await axios.get(baseUrl + 'network/telemetry?get=all', {
+        headers: {
+          Authorization: authorization
+        }
+      }).then(res => {
+        console.log(res);
+        return res.data;
+      })
       reply.header('content-type', 'application/json');
       reply.send(configuration);
     },
-    '/stats': async (request, reply) => {
-      const stats = await axios.get('http://192.168.12.1/TMI/v1/gateway?get=all')
-        .then(res => res.data);
+
+    async configuration(request, reply) {
+      const { authorization } = request.headers;
+      const configuration = await axios.get(baseUrl + 'network/configuration?get=ap', {
+        headers: {
+          Authorization: authorization
+        }
+      }).then(res => {
+        console.log(res);
+        return res.data;
+      })
+      reply.header('content-type', 'application/json');
+      reply.send(configuration);
+    },
+
+    async stats(request, reply) {
+      const stats = await axios.get(baseUrl + 'gateway?get=all').then(res => res.data);
       reply.header('content-type', 'application/json');
       reply.send(stats);
     },
   },
   post: {
-    '/configuration': async (request, reply) => {
+    async configuration(request, reply) {
       console.log('attempting to post to configuration');
     },
-    '/authorize': async (request, reply) => {
+
+    async authorize(request, reply) {
       const { username, password } = JSON.parse(request.body);
-      const auth = await axios.post('http://192.168.12.1/TMI/v1/auth/login', {
+      const auth = await axios.post(baseUrl + 'auth/login', {
         username,
         password
       }).then(res => res.data);
