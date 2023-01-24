@@ -83,11 +83,6 @@ class RouterDash {
   }
 
   render() {
-    const strength_4g_el = document.getElementById('4g-strength');
-    const strength_5g_el = document.getElementById('5g-strength');
-    strength_4g_el!.style.width = this._stats.signal['4g'].bars / 5 * 100 + '%'; // eslint-disable-line
-    strength_5g_el!.style.width = this._stats.signal['5g'].bars / 5 * 100 + '%'; // eslint-disable-line
-
     this.updateSignals();
     this.updateDeviceDetails();
   }
@@ -114,6 +109,10 @@ class RouterDash {
   updateSignals() {
     for (const signal in this._stats.signal) {
       if (!this['_' + signal + 'Stats'] || this['_' + signal + 'Stats'] == this._stats.signal[signal]) return;
+
+      const strengthEl = document.getElementById(signal + '-strength');
+      strengthEl!.style.width = this._stats.signal[signal].bars / 5 * 100 + '%';
+
       const el = document.getElementById(signal + '-stats');
       el!.innerHTML = ''; // eslint-disable-line
       for (const key in this._stats.signal[signal]) {
