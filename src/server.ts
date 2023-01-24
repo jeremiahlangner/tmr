@@ -24,7 +24,7 @@ const fastify = Fastify({
 
   // Index; ignoring queries for now.
   fastify.get('/', async (request, reply) => {
-    const file = readFileSync('./build/index.html', { encoding: 'utf8' })
+    const file = readFileSync('./build/index.html', { encoding: 'utf8' });
     reply.header('content-type', 'text/html');
     reply.send(file);
   });

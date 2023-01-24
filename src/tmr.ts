@@ -150,16 +150,16 @@ class RouterDash {
 const dash = new RouterDash(500);
 
 interface Device {
-  friendlyName: "5G Gateway",
-  hardwareVersion: "R01", // may make more generic; future router models?
+  friendlyName: '5G Gateway',
+  hardwareVersion: 'R01', // may make more generic; future router models?
   isEnabled: boolean,
   isMeshSupported: boolean,
   macId: string,
-  manufacturer: "Arcadyan",
+  manufacturer: 'Arcadyan',
   manufacturerOUI: string,
   model: string,
-  name: "5G Gateway",
-  role: "gateway",
+  name: '5G Gateway',
+  role: 'gateway',
   serial: string,
   softwareVersion: string,
   type: string,
@@ -167,9 +167,9 @@ interface Device {
 }
 
 interface Generic {
-  apn: "FBB.HOME", // 'FBB.HOME' for tmobile home internet, 'FBB.BUSINESS' for biz?
+  apn: 'FBB.HOME', // 'FBB.HOME' for tmobile home internet, 'FBB.BUSINESS' for biz?
   hasIPv6: boolean,
-  registration: "registered",
+  registration: 'registered',
   roaming: boolean
 }
 
@@ -194,26 +194,26 @@ interface Gateway {
 
 interface Channel {
   airtimeFairness: boolean,
-  channel: "Auto", // union or enum type
-  channelBandwidth: "80Mhz" | "Auto", // current known values
+  channel: 'Auto', // union or enum type
+  channelBandwidth: '80Mhz' | 'Auto', // current known values
   isMUMIMOEnabled: boolean,
   isRadioEnabled: boolean,
   isWMMEnabled: boolean,
   maxClients: number,
-  mode: "auto", // other modes?
+  mode: 'auto', // other modes?
   ssid: {
-    encryptionMode: "AES", // current known values
-    encryptionVersion: "WPA2/WPA3", // current known values
+    encryptionMode: 'AES', // current known values
+    encryptionVersion: 'WPA2/WPA3', // current known values
     isBroadcastEnabled: boolean,
     ssidName: string,
     steered: boolean,
     wpaKey: string
   },
-  transmissionPower: "100%" // current known value
+  transmissionPower: '100%' // current known value
 }
 
 interface NetworkConfiguration {
-  "2.4ghz": Channel,
-  "5.0ghz": Channel
+  '2.4ghz': Channel,
+  '5.0ghz': Channel
 }
 
