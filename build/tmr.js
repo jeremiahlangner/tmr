@@ -146,6 +146,7 @@ class RouterDash {
   }
   async refreshStats() {
     this._stats = await fetch("http://localhost:3000/stats").then((res) => res.json());
+    console.log(this._stats);
     this.render();
   }
 }

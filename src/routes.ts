@@ -10,10 +10,7 @@ export const routes = {
         headers: {
           Authorization: authorization
         }
-      }).then(res => {
-        console.log(res);
-        return res.data;
-      })
+      }).then(res => res.data);
       reply.header('content-type', 'application/json');
       reply.send(configuration);
     },
@@ -24,10 +21,7 @@ export const routes = {
         headers: {
           Authorization: authorization
         }
-      }).then(res => {
-        console.log(res);
-        return res.data;
-      })
+      }).then(res => res.data);
       reply.header('content-type', 'application/json');
       reply.send(configuration);
     },
