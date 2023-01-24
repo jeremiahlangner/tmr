@@ -75,4 +75,4 @@ interface NetworkConfiguration {
   '5.0ghz': Channel
 }
 
-export { Device, Signal, Gateway, Channel, NetworkConfiguration, Generic }
+export { Device, Signal, Gateway, Channel, NetworkConfiguration, Generic };

@@ -1,14 +1,14 @@
 import { Gateway } from './router.model';
 
 class RouterDash {
-  _settings: any;
-  _updateInterval;
-  _configuration: any = {};
-  _stats: Partial<Gateway> = {};
-  _4gStats = {};
-  _5gStats = {};
-  _deviceDetails = {};
-  _authorized = false;
+  private _settings: any;
+  private _updateInterval;
+  private _configuration: any = {};
+  private _stats: Partial<Gateway> = {};
+  private _4gStats = {};
+  private _5gStats = {};
+  private _deviceDetails = {};
+  private _authorized = false;
 
   constructor(interval: number) {
     this._settings = JSON.parse(localStorage.getItem('tmrouter') as string) || {};

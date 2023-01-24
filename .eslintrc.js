@@ -32,7 +32,7 @@ module.exports = {
     ],
     'semi': [
       'error',
-      'no-unexpected-multiline'
+      'always'
     ]
   }
 };
