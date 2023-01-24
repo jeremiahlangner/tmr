@@ -19,10 +19,18 @@ body {
   height: 14px;
   background-color: lightgray;
 
-  div {
+  div:first-child {
     height: 14px;
     background-color: green;
   }
+}
+
+.signal-bar-cover {
+  position: absolute;
+  margin-top: -14px;
+  width: 80px; 
+  height: 14px;
+  background: repeating-linear-gradient(to right, #fff, #fff 1px, transparent 1px, transparent 20%);
 }
 
 .stat-label {
