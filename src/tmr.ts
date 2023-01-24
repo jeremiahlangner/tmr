@@ -62,7 +62,7 @@ class RouterDash {
     await fetch('http://localhost:3000/authorize', {
       method: 'POST',
       body: JSON.stringify({
-        username: "admin",
+        username: 'admin',
         password: this._settings.password
       }),
       headers: {
@@ -70,7 +70,6 @@ class RouterDash {
       }
     }).then(res => res.json())
       .then(user => {
-        console.log(user);
         if (!user.auth.token) return;
         this._settings.user = user.auth;
         loginDlg.style.display = 'none';
@@ -113,8 +112,9 @@ class RouterDash {
 
   updateSignals() {
     for (const signal in this._stats.signal) {
-      if (this['_' + signal + 'Stats'] == this._stats.signal[signal]) return;
+      if (!this['_' + signal + 'Stats'] || this['_' + signal + 'Stats'] == this._stats.signal[signal]) return;
       const el = document.getElementById(signal + '-stats');
+      el!.innerHTML = ''; // eslint-disable-line
       for (const key in this._stats.signal[signal]) {
         const item = document.createElement('div');
         const label = document.createElement('span');

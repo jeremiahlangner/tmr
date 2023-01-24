@@ -58,7 +58,6 @@ class RouterDash {
         "accept": "application/json"
       }
     }).then((res) => res.json()).then((user) => {
-      console.log(user);
       if (!user.auth.token)
         return;
       this._settings.user = user.auth;
@@ -99,9 +98,10 @@ class RouterDash {
   }
   updateSignals() {
     for (const signal in this._stats.signal) {
-      if (this["_" + signal + "Stats"] == this._stats.signal[signal])
+      if (!this["_" + signal + "Stats"] || this["_" + signal + "Stats"] == this._stats.signal[signal])
         return;
       const el = document.getElementById(signal + "-stats");
+      el.innerHTML = "";
       for (const key in this._stats.signal[signal]) {
         const item = document.createElement("div");
         const label = document.createElement("span");
