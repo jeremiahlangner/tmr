@@ -34,7 +34,7 @@ async function main(): Promise<void> {
   // Use routing.
   for (const method in routes) {
     for (const route in routes[method]) {
-      fastify[method](route, routes[method][route]);
+      fastify[method]('/' + route, routes[method][route]);
     }
   }
 
