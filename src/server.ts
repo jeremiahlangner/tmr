@@ -7,7 +7,7 @@ const fastify = Fastify({
   logger: false
 });
 
-async function main(): Promise<void> {
+(async () => {
   const files = {};
   const list = readdirSync('./build/');
 
@@ -31,7 +31,7 @@ async function main(): Promise<void> {
   });
 
 
-  // Use routing.
+  // routing
   for (const method in routes) {
     for (const route in routes[method]) {
       fastify[method]('/' + route, routes[method][route]);
@@ -46,6 +46,5 @@ async function main(): Promise<void> {
     fastify.log.error(e);
     process.exit(1);
   }
-}
+})();
 
-main();
